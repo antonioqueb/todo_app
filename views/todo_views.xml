@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_todo_task_list" model="ir.ui.view">
+        <field name="name">todo.task.list</field>
+        <field name="model">todo.task</field>
+        <field name="arch" type="xml">
+            <list editable="bottom" decoration-success="is_done">
+                <field name="name"/>
+                <field name="priority" widget="priority"/>
+                <field name="is_done" widget="boolean_toggle"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_todo_task_form" model="ir.ui.view">
+        <field name="name">todo.task.form</field>
+        <field name="model">todo.task</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="priority" widget="priority"/>
+                        <field name="is_done"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_todo_dashboard" model="ir.actions.client">
+        <field name="name">Dashboard</field>
+        <field name="tag">todo_dashboard_action</field>
+    </record>
+
+    <record id="action_todo_task" model="ir.actions.act_window">
+        <field name="name">Tareas</field>
+        <field name="res_model">todo.task</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <menuitem id="menu_todo_root" name="Todo App" sequence="10"/>
+    <menuitem id="menu_todo_dashboard" name="Dashboard" parent="menu_todo_root" action="action_todo_dashboard" sequence="5"/>
+    <menuitem id="menu_todo_task" name="Tareas" parent="menu_todo_root" action="action_todo_task" sequence="10"/>
+</odoo>

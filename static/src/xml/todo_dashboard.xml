@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+    <t t-name="todo_app.Dashboard">
+        <div class="o_action p-4 bg-light h-100 overflow-auto">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h2 class="mb-0">Todo Dashboard</h2>
+                <div>
+                    <button class="btn btn-primary me-2" t-on-click="createQuickTask">Nueva Tarea</button>
+                    <button class="btn btn-light border" t-on-click="refresh"><i class="fa fa-refresh"/></button>
+                </div>
+            </div>
+
+            <t t-if="state.loading">
+                <div class="text-center p-5"><i class="fa fa-spinner fa-spin fa-3x"/></div>
+            </t>
+            <t t-else="">
+                <div class="row mb-4">
+                    <div class="col-md-3">
+                        <div class="card shadow-sm text-center p-3 border-0" t-on-click="() => this.openTasks([])" style="cursor:pointer">
+                            <div class="text-muted small">TOTAL</div>
+                            <div class="h2 text-primary" t-esc="state.total"/>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="card shadow-sm text-center p-3 border-0 border-start border-warning border-4" t-on-click="() => this.openTasks([['is_done','=',false]])" style="cursor:pointer">
+                            <div class="text-muted small">PENDIENTES</div>
+                            <div class="h2 text-warning" t-esc="state.pending"/>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="card shadow-sm text-center p-3 border-0 border-start border-success border-4" t-on-click="() => this.openTasks([['is_done','=',true]])" style="cursor:pointer">
+                            <div class="text-muted small">HECHAS</div>
+                            <div class="h2 text-success" t-esc="state.done"/>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="card shadow-sm text-center p-3 border-0 border-start border-danger border-4">
+                            <div class="text-muted small">CUMPLIMIENTO</div>
+                            <div class="h2 text-danger"><t t-esc="state.completion_rate"/>%</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="card shadow-sm p-4 border-0">
+                            <h5>Prioridades</h5>
+                            <div style="height: 250px;"><canvas id="priorityChart"/></div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="card shadow-sm p-4 border-0 h-100 d-flex flex-column justify-content-center align-items-center">
+                            <t t-if="state.completion_rate >= 100">
+                                <button class="btn btn-success btn-lg" t-on-click="celebrate">¡CELEBRAR! 🎉</button>
+                            </t>
+                            <t t-else="">
+                                <div class="progress w-100" style="height: 20px;">
+                                    <div class="progress-bar bg-info" t-attf-style="width: {{state.completion_rate}}%"/>
+                                </div>
+                                <p class="mt-2 text-muted">Faltan tareas para completar el día</p>
+                            </t>
+                        </div>
+                    </div>
+                </div>
+            </t>
+        </div>
+    </t>
+</templates>
