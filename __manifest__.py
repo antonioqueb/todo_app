@@ -1,8 +1,8 @@
 {
     'name': 'Tareas Minimalistas Odoo',
-    'version': '1.0',
+    'version': '1.1',
     'category': 'Tools',
-    'summary': 'Dashboard de tareas con OWL y Chart.js nativo',
+    'summary': 'Dashboard con Chart.js nativo de Odoo',
     'depends': ['base', 'web'],
     'data': [
         'security/ir.model.access.csv',

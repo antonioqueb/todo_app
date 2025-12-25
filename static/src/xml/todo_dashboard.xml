@@ -14,50 +14,57 @@
                 <div class="text-center p-5"><i class="fa fa-spinner fa-spin fa-3x"/></div>
             </t>
             <t t-else="">
-                <div class="row mb-4">
+                <div class="row g-3 mb-4">
                     <div class="col-md-3">
                         <div class="card shadow-sm text-center p-3 border-0" t-on-click="() => this.openTasks([])" style="cursor:pointer">
-                            <div class="text-muted small">TOTAL</div>
-                            <div class="h2 text-primary" t-esc="state.total"/>
+                            <div class="text-muted small fw-bold">TOTAL</div>
+                            <div class="display-6 text-primary" t-esc="state.total"/>
                         </div>
                     </div>
                     <div class="col-md-3">
                         <div class="card shadow-sm text-center p-3 border-0 border-start border-warning border-4" t-on-click="() => this.openTasks([['is_done','=',false]])" style="cursor:pointer">
-                            <div class="text-muted small">PENDIENTES</div>
-                            <div class="h2 text-warning" t-esc="state.pending"/>
+                            <div class="text-muted small fw-bold">PENDIENTES</div>
+                            <div class="display-6 text-warning" t-esc="state.pending"/>
                         </div>
                     </div>
                     <div class="col-md-3">
                         <div class="card shadow-sm text-center p-3 border-0 border-start border-success border-4" t-on-click="() => this.openTasks([['is_done','=',true]])" style="cursor:pointer">
-                            <div class="text-muted small">HECHAS</div>
-                            <div class="h2 text-success" t-esc="state.done"/>
+                            <div class="text-muted small fw-bold">HECHAS</div>
+                            <div class="display-6 text-success" t-esc="state.done"/>
                         </div>
                     </div>
                     <div class="col-md-3">
                         <div class="card shadow-sm text-center p-3 border-0 border-start border-danger border-4">
-                            <div class="text-muted small">CUMPLIMIENTO</div>
-                            <div class="h2 text-danger"><t t-esc="state.completion_rate"/>%</div>
+                            <div class="text-muted small fw-bold">PROGRESO</div>
+                            <div class="display-6 text-danger"><t t-esc="state.completion_rate"/>%</div>
                         </div>
                     </div>
                 </div>
 
-                <div class="row">
+                <div class="row g-3">
                     <div class="col-md-6">
-                        <div class="card shadow-sm p-4 border-0">
-                            <h5>Prioridades</h5>
-                            <div style="height: 250px;"><canvas id="priorityChart"/></div>
+                        <div class="card shadow-sm p-4 border-0 h-100">
+                            <h5 class="card-title">Distribución por Prioridad</h5>
+                            <div style="position: relative; height: 300px;">
+                                <canvas id="priorityChart"/>
+                            </div>
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="card shadow-sm p-4 border-0 h-100 d-flex flex-column justify-content-center align-items-center">
                             <t t-if="state.completion_rate >= 100">
-                                <button class="btn btn-success btn-lg" t-on-click="celebrate">¡CELEBRAR! 🎉</button>
+                                <div class="text-center">
+                                    <div class="display-1">🏆</div>
+                                    <h3>¡Todo completado!</h3>
+                                    <button class="btn btn-success btn-lg mt-3" t-on-click="celebrate">Lanzar Confeti</button>
+                                </div>
                             </t>
                             <t t-else="">
-                                <div class="progress w-100" style="height: 20px;">
-                                    <div class="progress-bar bg-info" t-attf-style="width: {{state.completion_rate}}%"/>
+                                <div class="progress w-100 mb-3" style="height: 30px;">
+                                    <div class="progress-bar progress-bar-striped progress-bar-animated bg-info" 
+                                         t-attf-style="width: {{state.completion_rate}}%"/>
                                 </div>
-                                <p class="mt-2 text-muted">Faltan tareas para completar el día</p>
+                                <p class="text-muted">¡Sigue así! Te faltan <t t-esc="state.pending"/> tareas.</p>
                             </t>
                         </div>
                     </div>
